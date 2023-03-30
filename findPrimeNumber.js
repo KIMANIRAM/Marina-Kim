@@ -50,7 +50,7 @@ function solution(numbers) {
 }
 
 
-// 테스트케이스
+// 테스트 케이스
 console.log(solution("17")); // 소수 [7, 17, 71], 3
 console.log(solution("011")); // 소수 [11, 101], 2
 console.log(solution("3330")); // 소수 [3], 1

@@ -3,7 +3,7 @@ function makeVowelDict(arr, num) {
     if (num === 1) return arr.map((item) => item);
 
     arr.forEach((fixed, index, origin) => {
-        // 중복순열
+        // 중복 순열
         const rest = origin;
         const permutations = makeVowelDict(rest, num - 1); 
         const attached = permutations.map((item) => fixed + item); 

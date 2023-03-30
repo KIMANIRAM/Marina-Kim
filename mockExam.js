@@ -37,7 +37,7 @@ function solution(answers) {
     let two_count = getCount([2, 1, 2, 3, 2, 4, 2, 5], newAnswers);
     let three_count = getCount([3, 3, 1, 1, 2, 2, 4, 4, 5, 5], newAnswers);
 
-    // 키(학생)-값(맞은 문제 개수) 쌍을 이차원 배열로 선언
+    // 키(학생), 값(맞은 문제 개수) 쌍을 이차원 배열로 선언
     const scores = [[1, one_count], [2, two_count], [3, three_count]];
 
     // console.log(`맞은 문제 개수: ${scores}`);
