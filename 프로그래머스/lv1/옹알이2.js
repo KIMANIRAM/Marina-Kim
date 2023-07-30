@@ -2,9 +2,9 @@
 function solution(babbling) {
     // regex.test("문자열") 매칭되면 true, 아니면 false를 반환
     // (): 캡처할 그룹
-    // \1: 정규식 내 캡처된 값 참조
-    const includeRe = /(aya|ye|woo|ma)\1+/;
-    const excludeRe = /^(aya|ye|woo|ma)+$/;
+    // \1: 정규식 내 캡처된 첫번째 그룹의 값 참조
+    const includeRe = /(aya|ye|woo|ma)\1+/; // 두번 이상 같은 말이 반복
+    const excludeRe = /^(aya|ye|woo|ma)+$/; // 해당 단어들의 반복으로만 이루어졌다는 조건
     
     return babbling.reduce((answer, word) => {
         return !includeRe.test(word) && excludeRe.test(word) ? ++answer : answer;
