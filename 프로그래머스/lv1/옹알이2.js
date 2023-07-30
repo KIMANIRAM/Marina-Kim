@@ -1,3 +1,17 @@
+// 정규식을 이용한 풀이
+function solution(babbling) {
+    // regex.test("문자열") 매칭되면 true, 아니면 false를 반환
+    // (): 캡처할 그룹
+    // \1: 정규식 내 캡처된 값 참조
+    const includeRe = /(aya|ye|woo|ma)\1+/;
+    const excludeRe = /^(aya|ye|woo|ma)+$/;
+    
+    return babbling.reduce((answer, word) => {
+        return !includeRe.test(word) && excludeRe.test(word) ? ++answer : answer;
+    }, 0);
+}
+
+// 원래 풀이
 function solution(babbling) {
     let count = 0;
     let talkableWords = new Map();
