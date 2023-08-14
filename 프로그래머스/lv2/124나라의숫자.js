@@ -1,4 +1,4 @@
-/* 첫 번째 풀이 - DP 효율성 초과
+/* 첫 번째 풀이 - 바텀업, 효율성 초과
 function solution(n) {
     let d = Array(n + 1).fill('');
     d[1] = [1];
@@ -17,4 +17,19 @@ function solution(n) {
 }
 */
 
-// 두 번째 풀이 - 스택
+// 두 번째 풀이 - 탑다운
+function solution(n) {
+    const stack = [];
+    
+    do {
+        if(n % 3 === 0) {
+            stack.push(4);
+            n = Math.floor(n / 3) - 1;
+        } else {
+            stack.push(n % 3);
+            n = Math.floor(n / 3);
+        }
+    } while(n > 0);
+    
+    return stack.reverse().join('');
+}
