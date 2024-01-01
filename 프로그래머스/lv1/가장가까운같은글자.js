@@ -23,3 +23,18 @@ function solution(s) {
     
     return answer;
 }
+
+// 1.1 2차 풀이 - Map 자료구조 사용:
+function solution(s) {
+    const hashMap = new Map(); 
+    const result = [];
+    
+    [...s].forEach((str, idx) => {
+        const currentValue = 
+              hashMap.get(str) === undefined ? -1 : idx - hashMap.get(str);
+        result.push(currentValue);
+        hashMap.set(str, idx);
+    });
+    
+    return result;
+}
