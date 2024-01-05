@@ -1,25 +1,18 @@
 function solution(number) {
-    const getCombinations = (arr, selectNumber = 3) => {
+    const selectStudent = (arr, n) => { 
         const results = [];
-        if(selectNumber === 1) return arr.map(e => [e]);
+        if(n === 1) return arr.map(e => [e]);
         
         arr.forEach((fixed, idx, origin) => {
-            const rest = origin.slice(idx + 1);
-            const combinations = getCombinations(rest, selectNumber - 1);
-            const attached = combinations.map(combination => [fixed, ...combination]);
+            const suffixes = selectStudent(origin.slice(idx + 1), n - 1);
+            const attached = suffixes.map(suffix => [fixed, ...suffix]);
             results.push(...attached);
         });
+        
         return results;
     }
     
-    const combinations = getCombinations(number);
+    const getSum = (arr) => arr.reduce((a, b) => a + b);
     
-    let answer = 0;
-    
-    combinations.forEach(combination => {
-        const sum = combination.reduce((a, b) => a + b);
-        if (sum === 0) answer++;
-    })
-    
-    return answer;
+    return selectStudent(number, 3).filter(e => getSum(e) === 0).length;
 }
