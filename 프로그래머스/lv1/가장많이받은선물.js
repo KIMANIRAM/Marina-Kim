@@ -1,42 +1,38 @@
 function pipe(...fns) {
-    return (...curriedArgs) => 
-        fns.reverse().reduceRight(
-            (res, fn) => [fn.call(null, ...res)]
-            , curriedArgs
+    return (...args) => {
+        return fns.reverse().reduceRight(
+            (res, fn) => [fn.call(null, ...res)], args
         )[0];
+    }
 }
 
 function solution(friends, gifts) {
     const friendsNameList = friends.reduce(
-        (obj, friend, idx) => ({...obj, [friend]: idx}), {});
+        (obj, friend, idx) => ({...obj, [friend]: idx})
+        , {}
+    );
     
     const createGiverTable = ($friends, $gifts, nameList) => {
-        let table = Array($friends.length).fill()
+        const table = Array($friends.length).fill()
             .map(e => Array($friends.length).fill(0));
         
-        $gifts.forEach((gift) => {
+        return $gifts.reduce((tb, gift) => {
             const [giver, reciever] = gift.split(' ');
-            const i = nameList[giver];
-            const j = nameList[reciever];
-            table[i][j]++;
-        });
-        
-        return table;
-    };
-    
-    const createRankArr = (table) => {
-        const ranks = []; 
-        
-        const givens = table.map(
-            row => row.reduce((total, val) => total + val, 0)
-        );
-        
-        const recieveds = table[0].map(
+            const [i, j] = [nameList[giver], nameList[reciever]];
+            tb[i][j]++;
+            
+            return tb;
+        }, table);
+    }
+   
+    const createRankArr = table => {
+        const given = table.map(row => row.reduce((total, cur) => total + cur, 0));
+        const recieved = table[0].map(
             (_, colIdx) => table.reduce((total, row) => total + row[colIdx], 0)
         );
         
-        return [table, givens.map((given, idx) => given - recieveds[idx])];
-    };
+        return [table, given.map((given, idx) => given - recieved[idx])];
+    }
     
     const createNextMonthGiftArr = ([table, ranks]) => {
         let nextMonthGifts = Array(ranks.length).fill(0);
@@ -59,7 +55,7 @@ function solution(friends, gifts) {
     }
     
     const findMaxGift = nextMonthGifts => Math.max(...nextMonthGifts);
-   
+    
     return pipe(
         createGiverTable,
         createRankArr,
