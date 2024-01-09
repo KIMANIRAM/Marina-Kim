@@ -1,26 +1,30 @@
-function transpos(grid) {
-    return grid[0].map((_, colIdx) => grid.map(row => row[colIdx]));
+function transpos(matrix) {
+    return matrix[0].map((_, colIdx) => matrix.map(row => row[colIdx]));
 }
 
+// Solved with pure function
 function solution(board, moves) {
-    const grid = transpos(board).map(row => row.filter(val => val > 0));
-    const stack = [];
-    let cnt = 0;
+    const filterdboard = transpos(board).map(row => row.filter(val => val > 0));
     
-    for(let i = 0; i < moves.length; i++) {
-        if(grid[moves[i] - 1].length > 0) {
-            const popVal = grid[moves[i] - 1].shift();
-            stack.push(popVal);
+    const selectDollCb = (fb) => 
+        ([stack, count], move) => {
+            if(fb[move - 1].length > 0) {
+                stack.push(fb[move - 1].shift());
+            }
+            if(
+                stack.length > 1
+                && (stack[stack.length - 1] === stack[stack.length - 2])
+            ) {
+                stack.splice(-2);
+                count += 2;
+            }
+            
+            return [stack, count];
         }
-
-        if(
-            stack.length > 1
-            && (stack[stack.length - 1] === stack[stack.length - 2])
-        ) {
-            stack.splice(-2);
-            cnt += 2;
-        }     
-    }
     
-    return cnt;
+    const selectDoll = (fb, moves) => {
+        return moves.reduce(selectDollCb(fb), [[], 0]);
+    };
+    
+    return selectDoll(filterdboard, moves)[1];
 }
