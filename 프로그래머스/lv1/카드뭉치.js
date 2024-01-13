@@ -1,14 +1,16 @@
 function solution(cards1, cards2, goal) {
-    const matchedCnt = goal.reduce((cnt, e) => {
-        if(e === cards1[0]) {
-            cards1.shift();
-            cnt -= 1;
-        } else if(e === cards2[0]) {
-            cards2.shift();
-            cnt -= 1;
+    const stack = [];
+    let [p1, p2] = [0, 0];
+    
+    for(let i = 0; i < goal.length; i++) {
+        if(goal[i] === cards1[p1]) {
+            stack.push(goal[i]);
+            p1++;
+        } else if(goal[i] === cards2[p2]) {
+            stack.push(goal[i]);
+            p2++;
         }
-        return cnt;
-    }, goal.length);
-
-    return matchedCnt === 0 ? 'Yes' : 'No';
+    }
+    
+    return stack.length === goal.length ? "Yes" : "No";
 }
