@@ -1,16 +1,13 @@
 function solution(k, m, score) {
-    const n = score.length;
-    let ans = 0;
-    
-    score.sort((a, b) => b - a);
-    
-    for(let i = 0; i < n; i += m) {
-        const temp = score.slice(i, i + m);
-        
-        if(temp.length === m) {
-            ans += m * temp[temp.length - 1];
-        }
-    }
-    
-    return ans;
+    const getMaxProfit = (sortedScr) => 
+        sortedScr.reduce(([total, idx], _) => {
+            const slicedScr = sortedScr.slice(idx, idx + m);
+            let cur = 0;
+            if(slicedScr.length === m) {
+                cur = m * slicedScr[slicedScr.length - 1];
+            }
+            return [total + cur, idx + m];
+        }, [0, 0]);
+
+    return getMaxProfit(score.sort((a, b) => b - a))[0];
 }
