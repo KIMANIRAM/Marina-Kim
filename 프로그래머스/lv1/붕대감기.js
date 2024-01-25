@@ -1,35 +1,37 @@
+// attacks의 길이: N, 1 ≤ N ≤ 100
 function solution(bandage, health, attacks) {
-    const timeLimit = attacks[attacks.length - 1][0] + 1;
+    const attackTimes = attacks.map(attack => attack[0]);
+    const attackAmounts = attacks.map(attack => attack[1]);
+    const getIsHit = (time, attimes) =>  time === attimes[0] ? true : false;
+
+    const N = attacks[attacks.length - 1][0] + 1;
     const [hpTime, hpPerSec, bonus] = bandage;
     let [curHp, combo] = [health, 0];
-
-    for(let curTime = 1; curTime < timeLimit; curTime++) {
-        let isHit = false;
-        let tempHp = curHp;
-
-        for(let i = 0; i < attacks.length; i++) {
-            if(attacks[i][0] === curTime) {
-                curHp -= attacks[i][1];
-                combo = 0;
-                isHit = true;
-                break;
-            }
-        }
-
-        if(curHp < 1) return -1;
-
-        if(isHit) continue;
-
-        combo++;
-
-        if(combo === hpTime || hpTime === 1) {
-            tempHp += bonus;
+    
+    const startTime = performance.now();
+    
+    for(let curTime = 1; curTime < N; curTime++) {
+        let isHit = getIsHit(curTime, attackTimes);
+        
+        if(isHit) {
+            attackTimes.shift();
+            curHp -= attackAmounts.shift();
             combo = 0;
+        } else {
+            combo++;
+            if(combo === hpTime || hpTime === 1) {
+                combo = 0;
+                curHp += bonus;
+            }
+            curHp = Math.min(health, curHp + hpPerSec);
         }
-
-        tempHp += hpPerSec;
-        curHp = Math.min(health, tempHp);
+        
+        if(curHp < 1) return -1;
     }
-
+    
+    const endTime = performance.now();
+    
+    console.log(`${endTime - startTime}ms`);
+  
     return curHp;
 }
