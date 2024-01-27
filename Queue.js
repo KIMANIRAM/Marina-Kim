@@ -1,4 +1,4 @@
-function Queue() {
+const queue = (function Queue() {
   let _storage = {};
   let [_front, _rear] = [0, 0];
   
@@ -41,9 +41,8 @@ function Queue() {
     enqueue: enqueue,
     dequeue: dequeue,
   }
-}
+})();
 
-const queue = Queue();
 queue.enqueue(3);
 queue.enqueue(4);
 queue.enqueue(1);
