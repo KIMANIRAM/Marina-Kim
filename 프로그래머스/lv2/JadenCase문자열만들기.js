@@ -3,16 +3,16 @@ function solution(s) {
     const passedWords = [];
     
     words.forEach(word => {
-       if(word.length === 0) {
-           passedWords.push('');
-       } else {
-           if(!isNaN(word[0])) {
-               passedWords.push(word.toLowerCase());
-            } else {
-                   passedWords.push(word[0].toUpperCase() 
-                                    + word.slice(1).toLowerCase());       
-               }
-       }
+      switch(true) {
+        case word.length === 0:
+          passedWords.push('');
+          break;
+        case isNaN(word[0]) === false:
+          passedWords.push(word.toLowerCase());
+          break;
+        default:
+          passedWords.push(word[0].toUpperCase() + word.slice(1).toLowerCase());
+      }
     });
     
     return passedWords.join(' ');
