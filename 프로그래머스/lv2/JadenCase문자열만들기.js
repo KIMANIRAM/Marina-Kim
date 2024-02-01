@@ -1,19 +1,11 @@
 function solution(s) {
-    const words = s.split(' ');
-    const passedWords = [];
+    const toJadenCase = (word) => {
+        if(word.length === 0) return '';
+        if(!isNaN(word[0])) return word[0] + word.slice(1).toLowerCase();
+        return word[0].toUpperCase() + word.slice(1).toLowerCase();
+    };
     
-    words.forEach(word => {
-      switch(true) {
-        case word.length === 0:
-          passedWords.push('');
-          break;
-        case isNaN(word[0]) === false:
-          passedWords.push(word.toLowerCase());
-          break;
-        default:
-          passedWords.push(word[0].toUpperCase() + word.slice(1).toLowerCase());
-      }
-    });
-    
-    return passedWords.join(' ');
+    return s.split(' ').reduce((ans, word, i) => {
+        return i > 0 ? ans + ' ' + toJadenCase(word) : ans + toJadenCase(word)
+    }, '');
 }
