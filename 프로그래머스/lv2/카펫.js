@@ -1,20 +1,21 @@
-function getDivisor(x) {
-    let results = [];
-    for(let i = 1; i <= Math.sqrt(x); i++){
-        if(x % i === 0) {
-            results.push([Math.floor(x / i) + 2, i + 2]);
+function getPrimeNumber(n) {
+    const resultPairs = [];
+    for(let i = 1; i <= Math.sqrt(n); i++) {
+        if(n % i === 0) {
+            resultPairs.push([Math.floor(n / i), i]);
         }
     }
-    return results;
+    return resultPairs;
 }
 
 function solution(brown, yellow) {
-    let divisors = getDivisor(yellow);
-
-    for(let i = 0; i < divisors.length; i++) {
-        let all_grid = divisors[i][0] * divisors[i][1];
-        if(all_grid - yellow === brown) {
-            return divisors[i];
-        }
-    }
+    const primePairs = getPrimeNumber(yellow);
+    
+    const yellowBox = primePairs.filter(pair => {
+        let gridBoundary = (pair[0] + 2) * 2 + pair[1] * 2;
+        if(gridBoundary === brown) return pair;
+    });
+    const [width, height] = yellowBox.flat();
+    
+    return [width + 2, height + 2];
 }
