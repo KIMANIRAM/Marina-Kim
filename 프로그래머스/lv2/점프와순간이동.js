@@ -39,4 +39,11 @@ if ((num & 0x1) != 0) /* 홀수 */
 
 // nArr은 정수 n을 이진수로 변환한 배열 ex) n = 5  -> 4+0+1 -> [1,0,1]
 nArr.reduce((a,b)=> a + b);
+
+따라서 비트 연산을 활용한 풀이:
+function solution(n)
+{ 
+    const binary = (n).toString(2); 
+    return [...binary].reduce((acc, cur) => (+acc) + (+cur), 0);
+}
 */
