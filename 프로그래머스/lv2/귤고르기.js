@@ -25,3 +25,30 @@ function solution(k, tangerine) {
 
     return cnt;
 }
+
+// 풀이 2 - Map (계수정렬보다 더 빠름)
+function solution(k, tangerine) {
+    const map = tangerine.reduce((acc, curV) => {
+        acc.set(curV, (acc.get(curV) || 0) + 1);
+        return acc;
+    }, new Map());
+    
+    const arr = Array.from(map.values()).sort((a, b) => b - a);
+
+    let cnt = 0;
+    
+    for(let i = 0; i < arr.length; i++) {
+        if(k === 0) {
+            return cnt;
+        }
+        if(arr[i] <= k) {
+            k -= arr[i];
+            cnt++;
+        } else {
+            k = 0;
+            cnt++;
+        }
+    }
+    
+    return cnt;
+}
