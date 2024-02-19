@@ -3,16 +3,12 @@
 // 각 의상 종류마다 1을 더해주는 이유는 그 의상 종류를 선택하지 않는 경우도 있기 때문이고
 // 마지막에 1을 빼는 이유는 모든 의상 종류를 입지 않는 경우는 없기 때문이다.
 function solution(clothes) {
-	let total = 1;
+    const hashmap = clothes.reduce((map, [_, category]) => {
+        map.set(category, (map.get(category) || 0) + 1);
+        return map;
+    }, new Map());
+    
+    const categoryCnts = Array.from(hashmap).map(([_, cnt]) => cnt + 1)
 
-	const map = clothes.reduce((acc, cur) => {
-		acc.set(cur[1], (acc.get(cur[1]) || 0) + 1);
-		return acc;
-	}, new Map());
-
-	for (let val of map.values()) {
-		total *= val + 1;
-	}
-
-	return total - 1;
+    return categoryCnts.reduce((a, b) => a * b, 1) - 1;
 }
