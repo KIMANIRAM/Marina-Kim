@@ -8,30 +8,29 @@
     캐시히트: CPU가 참조하고자 하는 메모리가 캐시에 있는 경우
 */
 function solution(cacheSize, cities) {
-    const cache = [];
-    const CACHE_HIT = 1;
-    const CACHE_MISS = 5;
-    let time = 0;
-
-    if(cacheSize === 0) {
-        return cities.length * CACHE_MISS;
-    }
-
-    for(let i = 0; i < cities.length; i++) {
-        const city = cities[i].toLowerCase();
-        const index = cache.indexOf(city);
-        if(index !== -1) {
-            time += CACHE_HIT;
-            cache.splice(index, 1);
-            cache.push(city);
-        } else {
-            time += CACHE_MISS;
-            if(cache.length === cacheSize) {
-                cache.shift();
-            }
-            cache.push(city);
+    const cacheMap = new Map();
+    
+    const cacheHit = (city, cache) => {
+        cache.delete(city);
+        cache.set(city, city);
+        return 1;
+    };
+    
+    const cacheMiss = (city, cache) => {
+        if(cacheSize === 0) return 5;
+        if(cache.size === cacheSize) {
+            cache.delete(cache.keys().next().value);
         }
-    }
+        cache.set(city, city);
+        return 5;
+    };
 
-    return time;
+    const getTimeCache = (city, cache) => 
+      (cache.has(city) ? cacheHit : cacheMiss)(city, cache);
+    
+    const totalTime = cities.map(
+        city => getTimeCache(city.toLocaleLowerCase(), cacheMap))
+                .reduce((total, time) => total + time, 0);
+    
+    return totalTime;
 }
