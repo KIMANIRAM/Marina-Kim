@@ -1,25 +1,20 @@
 function solution(priorities, location) {
-    const hashMap = priorities.reduce((map, e, i) => {
-        map.set(i, e);
-        return map;
-    }, new Map());
-    const q = Array.from(hashMap); 
-    const st = Array.from(hashMap).sort((a, b) => a[1] - b[1]);
+    const q = priorities.map((e, i) => [i, e]);
+    const st = priorities.map((e, i) => [i, e]).sort((a, b) => a[1] - b[1]);
     let cnt = 1;
     
     while(q.length) {
         if(!st.length) break;
-        const process = q.shift();
-        const maxProcess = st[st.length - 1];
-        
-        if(process[1] < maxProcess[1]) {
-            q.push(process);
+        const p = q.shift();
+        const max = st[st.length - 1];
+        if(max[1] > p[1]) {
+            q.push(p);
         } else {
             st.pop();
-            if(process[0] === location) {
+            if(p[0] === location) {
                 break;
             } else {
-                cnt += 1;
+                cnt++
             }
         }
     }
