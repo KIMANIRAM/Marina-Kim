@@ -33,3 +33,28 @@ function solution(n) {
     
     return stack.reverse().join('');
 }
+
+
+// 세 번째 풀이 - 재귀함수
+// 시간초과: 숫자 + ""은 매우 느리게 동작한다.
+function solution(n) {
+    const st = [];
+    
+    const recursive = (q) => {
+        if(q < 3) {
+            if(q > 0) st.push(q);
+            return;
+        }
+        if(q % 3 === 0) {
+            recursive(Math.floor(q / 3) - 1);
+            st.push(4);
+        } else {
+            recursive(Math.floor(q / 3));
+            st.push(q % 3);
+        }
+    }
+    
+    recursive(n);
+    
+    return st.join('');
+}
