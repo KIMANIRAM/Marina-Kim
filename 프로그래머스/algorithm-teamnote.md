@@ -114,15 +114,45 @@ nArr.reduce((a,b)=> a + b);
 ### 계수정렬
 ### 캐시
 ### 쿼드트리
+### 등차수열과 등비수열
+```
+// 등차수열: f(n) = f(n-1) + a
+// 등비수열: f(n) = f(n-1) * a
+let result;
+
+function solution(s, t, num) {
+  let acc = 0;
+  for(let i = 1; i <= num; i++) {
+    if(i === 1) acc += s;
+    else acc += t;
+    console.log(acc);
+  }
+  return acc;
+}
+
+result = solution(3, 2, 5); // 첫항은 3, 공차는 2, 등차수열 5개 출력
+console.log(result); // [3,5,7,9,11]
+```
 
 ## 알고리즘 템플릿
-최대공약수와 최소공배수
-소수판별, 에라토스테네스의 체
-투포인터
-슬라이딩윈도우
-계수정렬
-이진탐색
-DFS, BFS
-조합, 순열, 중복조합
-우선순위큐
+2진수 홀짝 판별, 이진수에서 1의 개수 구하기, dx와 dy
+
+슬라이딩윈도우, 투포인터, DFS, BFS, 소수판별, 에라토스테네스의 체, 최대공약수와 최소공배수
+
+우선순위큐, 조합, 순열, 중복조합, 이진탐색, 서로소판별, 계수정렬, 
+
+문자열 메소드:
+- (*).repeat
+- padStart(2, '0')와 padEnd
+- replaceAll(바꿀문자, 적용할문자)
+- subString(startIdx, endIdx)
+- startsWith('C로시작하면 true아니면 false')
+- indexOf, includes
+
+등차수열의 합 = (첫째 항 + 마지막 항) * 항의 개수 / 2 
+
+유클리드거리: Math.sqrt(Math.pow((x1- y1), 2) + Math.pow((x2- y2), 2))
+
+맨해튼거리: Math.abs(x2 - x1) + Math.abs(y2 - y1);
+
 
