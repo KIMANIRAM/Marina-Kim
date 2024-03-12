@@ -137,7 +137,7 @@ console.log(result); // [3,5,7,9,11]
 ## 알고리즘 템플릿
 2진수 홀짝 판별, 이진수에서 1의 개수 구하기, dx와 dy
 
-슬라이딩윈도우, 투포인터, DFS, BFS, 소수판별, 에라토스테네스의 체, 최대공약수와 최소공배수
+슬라이딩윈도우, 투포인터, 소수판별, 에라토스테네스의 체, 최대공약수와 최소공배수
 
 우선순위큐, 조합, 순열, 중복조합, 이진탐색, 서로소판별, 계수정렬, 
 
@@ -155,4 +155,54 @@ console.log(result); // [3,5,7,9,11]
 
 맨해튼거리: Math.abs(x2 - x1) + Math.abs(y2 - y1);
 
+DFS
+```
+const graph = {
+  1: [2, 3, 8],
+  2: [1, 7],
+  3: [4, 5],
+  4: [3, 5],
+  5: [3, 4],
+  6: [7],
+  7: [2, 6, 8],
+  8: [1, 7],
+};
 
+function dfs(start) {
+  let result = '';
+  const _dfs = (v, visited = new Set()) => {
+    if(visited.has(v)) return;
+    visited.add(v);
+    result += v + ' ';
+    graph[v].forEach(node => _dfs(node, visited));
+  };
+  _dfs(start);
+  return result;
+}
+
+console.log(dfs(1));
+```
+
+BFS
+```
+function bfs(start, visited = new Set()) {
+  let result = '';
+  const q = [];
+  q.push(start);
+  visited.add(start);
+  
+  while(q.length) {
+    const v = q.shift();
+    result += v + ' ';
+    graph[v].forEach(node => {
+      if(!visited.has(node)) {
+        q.push(node);
+        visited.add(node);
+      }
+    })
+  }
+  return result;
+}
+
+console.log(bfs(1));
+```
