@@ -23,13 +23,19 @@
 [괄호 회전하기](https://school.programmers.co.kr/learn/courses/30/lessons/76502)
 
 ## 해시
-
+- 입력으로 배열이 주어지는데 각각의 원소의 개수를 세어야 하는 경우
+- 완전탐색인데 n이 큰 경우
 [영어 끝말잇기](https://school.programmers.co.kr/learn/courses/30/lessons/12981)
 [할인행사](https://school.programmers.co.kr/learn/courses/30/lessons/131127)
+[롤케이크 자르기](https://school.programmers.co.kr/learn/courses/30/lessons/132265)
 
 
 
-## 완전탐색, DFS, 백트래킹
+## 완전탐색, DFS(재귀), 백트래킹
+- 컴퓨터는 1초에 천만 번 연산한다. n에 따라 사용하는 알고리즘이 달라진다. (500, 2000, 십만, 천만)
+- 백트래킹: DFS를 통해 모든 노드를 깊이 우선 탐색을 하면서 현재 노드가 제한조건을 위배한다면 그 노드를 제외
+- 대략적인 컨셉을 가지고 푼다.
+[n-queens](https://school.programmers.co.kr/learn/courses/30/lessons/12952)
 
 ## 최단거리, BFS
 
