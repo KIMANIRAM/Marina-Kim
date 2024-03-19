@@ -10,8 +10,6 @@
 
 [귤고르기](https://school.programmers.co.kr/learn/courses/30/lessons/138476)
 
-
-
 ## 스택/큐
 - 하나씩 검사하면서 조건에 일치하면 스택에 있는 걸 한꺼번에 처리하는 경우
 - 문자열 문제에서 스택을 많이 사용함
@@ -22,24 +20,48 @@
 
 [괄호 회전하기](https://school.programmers.co.kr/learn/courses/30/lessons/76502)
 
+## 우선순위큐
+- 스택이나 큐를 사용해야 할 것 같은데 값을 큰 순서대로/작은 순서대로 꺼내야 할 때
+
+- 그냥 우선순위큐:  최소 힙을 기준으로 부모 노드가 항상 자식 노드보다 작은 형태의 완전 이진 트리로 구현
+
+- 이중 우선순위큐: Set으로 구현
+
+[호텔 대실](https://school.programmers.co.kr/learn/courses/30/lessons/155651)
+
+[이중우선순위큐](https://school.programmers.co.kr/learn/courses/30/lessons/42628)
+
 ## 해시
 - 입력으로 배열이 주어지는데 각각의 원소의 개수를 세어야 하는 경우
 - 완전탐색인데 n이 큰 경우
+
 [영어 끝말잇기](https://school.programmers.co.kr/learn/courses/30/lessons/12981)
+
 [할인행사](https://school.programmers.co.kr/learn/courses/30/lessons/131127)
+
 [롤케이크 자르기](https://school.programmers.co.kr/learn/courses/30/lessons/132265)
-
-
 
 ## 완전탐색, DFS(재귀), 백트래킹
 - 컴퓨터는 1초에 천만 번 연산한다. n에 따라 사용하는 알고리즘이 달라진다. (500, 2000, 십만, 천만)
+
+- 모든 경우를 탐색해야 하면 DFS를 사용한다.
+
+- 상태트리를 그리는데 여러 개로 갈라진다 -> dfs를 여러 번 사용한다.
+
 - 백트래킹: DFS를 통해 모든 노드를 깊이 우선 탐색을 하면서 현재 노드가 제한조건을 위배한다면 그 노드를 제외
-- 대략적인 컨셉을 가지고 푼다.
+
+[마법의 엘리베이터](https://school.programmers.co.kr/learn/courses/30/lessons/148653)
+
 [n-queens](https://school.programmers.co.kr/learn/courses/30/lessons/12952)
 
 ## 최단거리, BFS
+- 그리드 형태의 맵이 주어지고 목적지에 도착했을 때의 최단거리(최소비용)을 구하는 문제 -> 전형적인 BFS
 
-## 분할정복, 재귀, DP
+[미로탈출](https://school.programmers.co.kr/learn/courses/30/lessons/159993)
+
+[무인도 여행](https://school.programmers.co.kr/learn/courses/30/lessons/154540)
+
+## 분할정복, DP
 - 특정 조건을 만족할 때까지 같은 작업을 계속 반복해야 하는 경우
 - 문제에서 설명을 바텀업으로 해도 탑다운(재귀)으로 풀어야 할 때도 있음
 - while문 또는 꼬리재귀만 생각해서 푸는 경우는 입력 개수가 십만 개 이하인 경우에 해당.
@@ -54,16 +76,21 @@
 
 [멀리뛰기](https://school.programmers.co.kr/learn/courses/30/lessons/12914)
 
-
+[숫자 변환하기](https://school.programmers.co.kr/learn/courses/30/lessons/154538)
 
 
 ## 이진탐색
 - 큰 범위를 절반씩 나눠서 탐색하는 경우
-- 탑다운 방식(재귀 또는 while문)
+
+- 탐색 범위가 억단위인데 최소 결과값과 최대 결과값을 문제에서 바로 구할 수 있고 그 범위가 연속적인 경우
+
+- 문제에서는 보통 while문을 사용
 
 [예상 대진표](https://school.programmers.co.kr/learn/courses/30/lessons/12985)
 
-## 슬라이딩윈도우, 투포인터, 구간 합
+[입국 심사](https://school.programmers.co.kr/learn/courses/30/lessons/43238)
+
+## 슬라이딩윈도우, 투포인터
 - 1차원 배열을 두 번 이상 반복해서 탐색해야 하는 경우
 - O(n^2)의 시간복잡도를 O(n)으로 줄일 수 있음
 
@@ -82,13 +109,13 @@
 
 [숫자의 표현](https://school.programmers.co.kr/learn/courses/30/lessons/12924)
 
-
-
 ## 조합, 순열, 중복조합
 - 순열 시간 복잡도: O(n!)
 - 조합 시간 복잡도: O(2ⁿ)
 - 기본 순열과 조합 알고리즘은 n이 10 이하일때 사용 가능
 - 10이 넘어가면 다름 알고리즘을 사용해야 함
+
+[땅따먹기](https://school.programmers.co.kr/learn/courses/30/lessons/12913)
 
 ## 수학
 ### 소수
@@ -145,18 +172,25 @@ console.log(result); // [3,5,7,9,11]
 ```
 
 ## 알고리즘 템플릿
-2진수 홀짝 판별, 이진수에서 1의 개수 구하기, dx와 dy
+백트래킹 기본 템플릿, bfs 기본 템플릿
 
 슬라이딩윈도우, 투포인터, 소수판별, 에라토스테네스의 체, 최대공약수와 최소공배수
 
 우선순위큐, 조합, 순열, 중복조합, 이진탐색, 서로소판별, 계수정렬, 
 
+다익스트라, 플로이드워셜
+
 문자열 메소드:
-- (*).repeat
+- (*).repeat(반복개수)
+
 - padStart(2, '0')와 padEnd
+
 - replaceAll(바꿀문자, 적용할문자)
+
 - subString(startIdx, endIdx)
+
 - startsWith('C로시작하면 true아니면 false')
+
 - indexOf, includes
 
 등차수열의 합 = (첫째 항 + 마지막 항) * 항의 개수 / 2 
