@@ -34,6 +34,7 @@
 ## 해시
 - 입력으로 배열이 주어지는데 각각의 원소의 개수를 세어야 하는 경우
 - 완전탐색인데 n이 큰 경우
+- 해시와 셋 둘 다 삽입삭제탐색 O(1)이지만 해시는 값의 순서가 보장되고 셋은 보장되지 않음
 
 [영어 끝말잇기](https://school.programmers.co.kr/learn/courses/30/lessons/12981)
 
@@ -61,23 +62,32 @@
 
 [무인도 여행](https://school.programmers.co.kr/learn/courses/30/lessons/154540)
 
-## 분할정복, DP
+## 분할정복
 - 특정 조건을 만족할 때까지 같은 작업을 계속 반복해야 하는 경우
-- 문제에서 설명을 바텀업으로 해도 탑다운(재귀)으로 풀어야 할 때도 있음
-- while문 또는 꼬리재귀만 생각해서 푸는 경우는 입력 개수가 십만 개 이하인 경우에 해당.
-- 문제에서 **~를 나눈 나머지**가 보이면 무조건 DP
-- dp테이블은 미리 주어진 크기만큼 초기화 한 후 값을 변경한다. 동적으로 push하면 시간초과 주의!
+
+- **문제에서 주어진 입력값부터 시작해서 아래로 내려가며 구현**
 
 [이진변환 반복하기](https://school.programmers.co.kr/learn/courses/30/lessons/70129)
 
-[피보나치 수](https://school.programmers.co.kr/learn/courses/30/lessons/12945)
-
 [점프와 순간이동](https://school.programmers.co.kr/learn/courses/30/lessons/12980)
 
-[멀리뛰기](https://school.programmers.co.kr/learn/courses/30/lessons/12914)
+
+## DP
+- 가장 작은 값부터 시작해서 이 값을 저장하고, 미리 구한 값을 이용해서 상위 문제를 풀어나가는 방식
+
+- '`d[n]`은 처리하고자 하는 n번째 값' 이라는 아이디어를 시작으로 점화식부터 구한다.
+
+- 문제에서 **~를 나눈 나머지**가 보이면 무조건 DP
+
+- dp테이블은 미리 주어진 크기만큼 초기화 한 후 값을 변경한다. 동적으로 push하면 시간초과 주의!
+
+[피보나치 수](https://school.programmers.co.kr/learn/courses/30/lessons/12945)
+
+[N으로 표현](https://school.programmers.co.kr/learn/courses/30/lessons/42895)
 
 [숫자 변환하기](https://school.programmers.co.kr/learn/courses/30/lessons/154538)
 
+[멀리뛰기](https://school.programmers.co.kr/learn/courses/30/lessons/12914)
 
 ## 이진탐색
 - 큰 범위를 절반씩 나눠서 탐색하는 경우
@@ -89,6 +99,17 @@
 [예상 대진표](https://school.programmers.co.kr/learn/courses/30/lessons/12985)
 
 [입국 심사](https://school.programmers.co.kr/learn/courses/30/lessons/43238)
+
+[시소 짝꿍](https://school.programmers.co.kr/learn/courses/30/lessons/152996)
+
+## 최단경로
+- 그리디와 DP를 합친 유형.
+
+- 다익스트라: 한 지점에서 다른 모든 지점까지의 최단 경로를 구해야 하는 경우, 시간복잡도 `O(ElogV)`
+
+- 플로이드 워셜: 모든 지점에서 다른 모든 지점까지의 최단 경로를 구해야 하는 경우, 시간복잡도 `O(V³)`
+
+[가장 먼 노](https://school.programmers.co.kr/learn/courses/30/lessons/49189)
 
 ## 슬라이딩윈도우, 투포인터
 - 1차원 배열을 두 번 이상 반복해서 탐색해야 하는 경우
@@ -112,8 +133,7 @@
 ## 조합, 순열, 중복조합
 - 순열 시간 복잡도: O(n!)
 - 조합 시간 복잡도: O(2ⁿ)
-- 기본 순열과 조합 알고리즘은 n이 10 이하일때 사용 가능
-- 10이 넘어가면 다름 알고리즘을 사용해야 함
+- 기본 순열과 조합 알고리즘은 n이 십만 이하일 때 사용해야 함
 
 [땅따먹기](https://school.programmers.co.kr/learn/courses/30/lessons/12913)
 
@@ -176,9 +196,137 @@ console.log(result); // [3,5,7,9,11]
 
 슬라이딩윈도우, 투포인터, 소수판별, 에라토스테네스의 체, 최대공약수와 최소공배수
 
-우선순위큐, 조합, 순열, 중복조합, 이진탐색, 서로소판별, 계수정렬, 
+조합, 순열, 중복조합, 이진탐색, 서로소판별, 계수정렬, 
 
-다익스트라, 플로이드워셜
+우선순위큐
+```
+class PriorityQueue {
+    constructor() {
+        this.heap = [];
+    }
+    
+    empty() {
+        return this.heap.length === 0;
+    }
+    
+    peek() {
+        return this.heap[0];
+    }
+    
+    push(data) {
+        this.heap.push(data);
+        let i = this.heap.length - 1;
+        
+        while(i > 0) {
+            const parent = ~~((i - 1) / 2);
+            if(this.heap[parent] <= this.heap[i]) break;
+            [this.heap[i], this.heap[parent]] = [this.heap[parent], this.heap[i]];
+            i = parent;
+        }
+    }
+    
+    pop() {
+        if(this.empty()) return;
+        
+        const value = this.peek();
+        
+        [this.heap[0], this.heap[this.heap.length - 1]] = [
+            this.heap[this.heap.length - 1],
+            this.heap[0]
+        ]
+        this.heap.pop();
+        this._heapify();
+        
+        return value;
+    }
+    
+    _heapify() {
+        const x = this.peek();
+        const n = this.heap.length;
+        let cur = 0;
+        
+        while(2 * cur + 1 < n) {
+            let left = 2 * cur + 1;
+            let right = left + 1;
+            let smaller = right < n &&
+                this.heap[right] < this.heap[left] ? right : left;
+            
+            if(x > this.heap[smaller]) {
+                [this.heap[cur], this.heap[smaller]] =
+                    [this.heap[smaller], this.heap[cur]];
+                cur = smaller;
+            } else {
+                break;
+            }
+        }
+    }
+}
+```
+
+다익스트라
+```
+// 노드 개수 n: 6
+// 간선 정보 edge: [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]
+function solution(n, edge) {
+    const d = Array(n + 1).fill(Number.MAX_SAFE_INTEGER);
+    const graph = Array.from(Array(n + 1), () => []);
+    // a에서 b로 지나가는 비용은 1
+    for(const [a, b] of edge) {
+        graph[a].push([b, 1]); // [노드, 비용]
+        graph[b].push([a, 1]);
+    }
+    
+    const dijkstra = (start) => {
+        const pq = new PriorityQueue();
+        pq.push([0, start]); // [비용, 노드]
+
+        d[start] = 0;
+        
+        while(!pq.empty()) {
+            const [dist, cur] = pq.pop();
+            
+            if(d[cur] < dist) continue;
+            
+            for(const i of graph[cur]) { 
+                const node = i[0];
+                const cost = dist + i[1];
+                if(cost < d[node]) {
+                    pq.push([cost, node]);
+                    d[node] = cost;
+                }
+            }
+        }
+    };
+    
+    dijkstra(1); // 1번 노드에서 각 노드까지 갈때의 최단 경로
+    
+    return d; 
+}
+```
+
+플로이드워셜
+```
+// 노드의 개수 n
+// 간선 정보 edges = [[1,2,3], [1,4,3], [2,1,3], [2,3,1], [3,4,5], ...]
+function solution(n, edges) {
+  const d = Array(n + 1).fill().map(e => Array(n + 1).fill(Number.MAX_SAFE_INTEGER));
+  // a에서 b로 가는 비용은 c
+  for(let i = 1; i <= n; i++) d[i][i] = 0;
+	for(const [a, b, c] of edges) {
+    d[a][b] = c;
+  }
+	
+  // 경유지 - 출발지 - 도착지
+  for(let k = 1; k <= n; k++) {
+    for(let a = 1; a <= n; a++) {
+      for(let b = 1; b <= n; b++) {
+        if(a === k || k === b) continue; // 대각원소는 무조건 0이라서 제외
+        d[a][b] = Math.min(d[a][b], d[a][k] + d[k][b]);
+      }
+    }
+  }
+}
+```
 
 문자열 메소드:
 - (*).repeat(반복개수)
