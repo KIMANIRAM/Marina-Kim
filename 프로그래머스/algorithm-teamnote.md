@@ -96,6 +96,8 @@
 
 - 문제에서는 보통 while문을 사용
 
+- 중복된 값이 있는 배열이라면 upperBound와 lowerBound로 푼다.
+
 [예상 대진표](https://school.programmers.co.kr/learn/courses/30/lessons/12985)
 
 [입국 심사](https://school.programmers.co.kr/learn/courses/30/lessons/43238)
@@ -397,4 +399,32 @@ function bfs(start, visited = new Set()) {
 }
 
 console.log(bfs(1));
+```
+
+이진탐색 활용 - upperBound와 lowerBound
+
+```
+function upperBound(target, arr, left, right) {
+    while(left < right) {
+        let mid = ~~((left + right) / 2);
+        if(target < arr[mid]) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left;
+}
+
+function lowerBound(target, arr, left, right) {
+    while(left < right) {
+        let mid = ~~((left + right) / 2);
+        if(target <= arr[mid]) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return left;
+}
 ```
