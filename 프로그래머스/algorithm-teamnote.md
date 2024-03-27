@@ -1,14 +1,26 @@
 ## 그리디, 정렬
-- 대부분 그리디 + 문제에서 숨겨진 알고리즘을 사용해서 푼다.
-- 문제를 풀기 위한 최소한의 아이디어(그리디) + 숨겨진 알고리즘(그 아이디어를 구체적으로 구현하는 방법)
-- 숨겨진 알고리즘은 문제에서 주어진 입력개수로 판단 가능.
+- 관찰을 통해 탐색 범위를 줄이는 알고리즘
+
+- 문제를 보자마자 시간복잡도를 확인하고 탐색범위를 줄이기 위한 최소한의 아이디어를 고안한다.
+- 실전에서는?
+  - 비슷한 문제를 풀어봤거나 간단한 문제여서 나의 그리디 풀이를 100% 확신한다. -> 일단 한번 제출해보고 틀리면 손절하고 다음 문제로 넘어간다.
+  - 그리디 풀이를 찾아냈지만 100% 확신 못함 -> 일단 다음 문제로 넘어가고 시간이 남는다면 코딩 시작
+
 - 정렬 먼저 한 뒤에 문제를 풀어야 하는 경우가 많음
+
+- 대표적인 문제 유형: task scheduling problem, 재배열부등식
+
+- **잘못된 그리디** DP 문제를 그리디로 착각해서 푸는 경우를 주의하자. (0-1 knapsack)
 
 [최솟값 만들기](https://school.programmers.co.kr/learn/courses/30/lessons/12941)
 
 [구명보트](https://school.programmers.co.kr/learn/courses/30/lessons/42885)
 
 [귤고르기](https://school.programmers.co.kr/learn/courses/30/lessons/138476)
+
+[호텔 대실](https://school.programmers.co.kr/learn/courses/30/lessons/155651)
+
+[요격 시스템](https://school.programmers.co.kr/learn/courses/30/lessons/181188)
 
 ## 스택/큐
 - 하나씩 검사하면서 조건에 일치하면 스택에 있는 걸 한꺼번에 처리하는 경우
