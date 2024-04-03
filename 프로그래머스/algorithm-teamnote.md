@@ -1,3 +1,14 @@
+## 시간복잡도
+- **문제를 볼 때마다 시간복잡도 작성하기**
+
+- 기술면접에서는 코테 문제를 보여주고 시간복잡도를 묻는 경우가 자주 발생함:
+  - 가장 안쪽 함수부터 확인한다. 함수를 딱 한번만 호출하면 O(1)이지만, 바깥에서 for loop를 돌며 호출하고 있다면 최종 시간복잡도는 `N * O(1) = O(N)`이다.
+
+- 하노이 탑 알고리즘의 시간복잡도: `O(2^n - 1)`
+
+- 피보나치 수열의 시간 복잡도: 재귀함수는 `O(2^n)`, dp를 사용하면 `O(n)`
+
+
 ## 그리디, 정렬
 - 관찰을 통해 탐색 범위를 줄이는 알고리즘
 
@@ -21,6 +32,9 @@
 [호텔 대실](https://school.programmers.co.kr/learn/courses/30/lessons/155651)
 
 [요격 시스템](https://school.programmers.co.kr/learn/courses/30/lessons/181188)
+
+[단속 카메라](https://school.programmers.co.kr/learn/courses/30/lessons/42884?language=javascript)
+
 
 ## 스택/큐
 - 하나씩 검사하면서 조건에 일치하면 스택에 있는 걸 한꺼번에 처리하는 경우
@@ -66,6 +80,10 @@
 [마법의 엘리베이터](https://school.programmers.co.kr/learn/courses/30/lessons/148653)
 
 [n-queens](https://school.programmers.co.kr/learn/courses/30/lessons/12952)
+
+[하노이 탑](https://school.programmers.co.kr/learn/courses/30/lessons/12946)
+
+[삼각 달팽이](https://school.programmers.co.kr/learn/courses/30/lessons/68645)
 
 ## 최단거리, BFS
 - 그리드 형태의 맵이 주어지고 목적지에 도착했을 때의 최단거리(최소비용)을 구하는 문제 -> 전형적인 BFS
