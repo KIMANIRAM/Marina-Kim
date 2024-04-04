@@ -22,3 +22,30 @@ function solution(n) {
 
     return dp.map(_row => _row.filter(e => e > 0)).flat();
 }
+
+// 두 번째 풀이 - DFS
+function solution(n) {
+    const answer = Array(n).fill().map(e => Array(n).fill(0));
+    const dirs = [
+        [-1, -1],
+        [1, 0],
+        [0, 1]
+    ];
+    
+    const dfs = (N, x, y, curV) => {
+        if(N > n) return;
+        const [dx, dy] = dirs[N % 3];
+        let [nx, ny] = [x, y];
+        for(let i = 0; i <= n - N; i++) {
+            nx += dx;
+            ny += dy;
+            answer[nx][ny] = curV;
+            curV++;
+        }
+        dfs(N + 1, nx, ny, curV);
+    };
+    
+    dfs(1, -1, 0, 1);
+    
+    return answer.map(arr => arr.filter(e => e > 0)).flat();
+}
