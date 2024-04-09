@@ -137,11 +137,13 @@
 ## 최단경로
 - 그리디와 DP를 합친 유형.
 
-- 다익스트라: 한 지점에서 다른 모든 지점까지의 최단 경로를 구해야 하는 경우, 시간복잡도 `O(ElogV)`
+- 다익스트라: 한 지점에서 다른 모든 지점까지의 최단 경로를 구해야 하는 경우, 시간복잡도 `O(ElogV)` (E: 간선 수, V: 노드 수)
 
 - 플로이드 워셜: 모든 지점에서 다른 모든 지점까지의 최단 경로를 구해야 하는 경우, 시간복잡도 `O(V³)`
 
-[가장 먼 노](https://school.programmers.co.kr/learn/courses/30/lessons/49189)
+[가장 먼 노드](https://school.programmers.co.kr/learn/courses/30/lessons/49189)
+
+[배달](https://school.programmers.co.kr/learn/courses/30/lessons/12978?language=javascript)
 
 ## 슬라이딩윈도우, 투포인터
 - 1차원 배열을 두 번 이상 반복해서 탐색해야 하는 경우
@@ -224,11 +226,14 @@ console.log(result); // [3,5,7,9,11]
 ```
 
 ## 알고리즘 템플릿
+
+알파벳 배열: `[..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"]`
+
 백트래킹 기본 템플릿, bfs 기본 템플릿
 
 슬라이딩윈도우, 투포인터, 소수판별, 에라토스테네스의 체, 최대공약수와 최소공배수
 
-조합, 순열, 중복조합, 이진탐색, 서로소판별, 계수정렬, 
+조합, 순열, 중복조합, 서로소판별, 계수정렬, 
 
 우선순위큐
 ```
@@ -298,14 +303,14 @@ class PriorityQueue {
 다익스트라
 ```
 // 노드 개수 n: 6
-// 간선 정보 edge: [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]
+// 간선 정보 edge: [[3, 6, 1], [4, 3, 1], [3, 2, 1], [1, 3, 1], [1, 2, 1], [2, 4, 1], [5, 2, 1]]
 function solution(n, edge) {
     const d = Array(n + 1).fill(Number.MAX_SAFE_INTEGER);
     const graph = Array.from(Array(n + 1), () => []);
-    // a에서 b로 지나가는 비용은 1
-    for(const [a, b] of edge) {
-        graph[a].push([b, 1]); // [노드, 비용]
-        graph[b].push([a, 1]);
+    // a에서 b로 지나가는 비용은 c
+    for(const [a, b, c] of edge) {
+        graph[a].push([b, c]); // [노드, 비용]
+        graph[b].push([a, c]);
     }
     
     const dijkstra = (start) => {
@@ -429,6 +434,11 @@ function bfs(start, visited = new Set()) {
 }
 
 console.log(bfs(1));
+```
+
+이진탐색
+```
+		
 ```
 
 이진탐색 활용 - upperBound와 lowerBound
