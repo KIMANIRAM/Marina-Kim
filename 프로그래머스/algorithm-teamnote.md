@@ -1,8 +1,19 @@
 ## 시간복잡도
 - **문제를 볼 때마다 시간복잡도 작성하기**
 
+- 보통 컴퓨터는 1초당 최대 **1억 번** 연산 가능.
+
+- O(logN): 100억 번(최대 연산 횟수 = n의 범위)
+- O(N): 천만 번
+- O(NlogN): 10만 번
+- O(N^2): 1만 번
+- O(N^3): 500 번
+- O(2^N): 20 번
+- O(N!): 최대 10 번
+
 - 기술면접에서는 코테 문제를 보여주고 시간복잡도를 묻는 경우가 자주 발생함:
   - 가장 안쪽 함수부터 확인한다. 함수를 딱 한번만 호출하면 O(1)이지만, 바깥에서 for loop를 돌며 호출하고 있다면 최종 시간복잡도는 `N * O(1) = O(N)`이다.
+  - 이때 N을 넣었을 때 연산횟수가 1억 번이 넘어가면 해당 알고리즘은 사용할 수 없다.
 
 - 하노이 탑 알고리즘의 시간복잡도: `O(2^n - 1)`
 
@@ -37,14 +48,26 @@
 
 
 ## 스택/큐
-- 하나씩 검사하면서 조건에 일치하면 스택에 있는 걸 한꺼번에 처리하는 경우
+- 최대/최소를 물어보면서 주어진 배열을 정렬해서는 안 되는 문제
+- 하나씩 검사하면서 스택에 넣었다가 조건에 일치하면 스택에 있는 걸 한꺼번에 처리
 - 문자열 문제에서 스택을 많이 사용함
+- 일련의 과정을 하나씩 수행하고, n이 최대 10000이면 큐 사용 가능.
+- n이 10000을 초과 => for 문 내에서 shift를 사용하면 시간복잡도는 O(N^2)이 되서 시간 초과남.
 
 [올바른 괄호](https://school.programmers.co.kr/learn/courses/30/lessons/12909)
 
 [짝지어 제거하기](https://school.programmers.co.kr/learn/courses/30/lessons/12973)
 
 [괄호 회전하기](https://school.programmers.co.kr/learn/courses/30/lessons/76502)
+
+[기능 개발](https://school.programmers.co.kr/learn/courses/30/lessons/42586)
+
+[프로세스](https://school.programmers.co.kr/learn/courses/30/lessons/42587)
+
+[다리를 지나는 트럭](https://school.programmers.co.kr/learn/courses/30/lessons/42583)
+
+[주식가격](https://school.programmers.co.kr/learn/courses/30/lessons/42584)
+
 
 ## 우선순위큐
 - 스택이나 큐를 사용해야 할 것 같은데 값을 큰 순서대로/작은 순서대로 꺼내야 할 때
@@ -55,12 +78,20 @@
 
 [호텔 대실](https://school.programmers.co.kr/learn/courses/30/lessons/155651)
 
+[더 맵게](https://school.programmers.co.kr/learn/courses/30/lessons/42626)
+
 [이중우선순위큐](https://school.programmers.co.kr/learn/courses/30/lessons/42628)
 
 ## 해시
 - 입력으로 배열이 주어지는데 각각의 원소의 개수를 세어야 하는 경우
-- 완전탐색인데 n이 큰 경우
+- 조합유형의 완전탐색 문제인데 n이 큰 경우(n이 10 이상인 경우)
 - 해시와 셋 둘 다 삽입삭제탐색 O(1)이지만 해시는 값의 순서가 보장되고 셋은 보장되지 않음
+
+[완주하지 못한 선수](https://school.programmers.co.kr/learn/courses/30/lessons/42576)
+
+[전화번호 목록](https://school.programmers.co.kr/learn/courses/30/lessons/42577)
+
+[의상](https://school.programmers.co.kr/learn/courses/30/lessons/42578)
 
 [영어 끝말잇기](https://school.programmers.co.kr/learn/courses/30/lessons/12981)
 
@@ -69,8 +100,6 @@
 [롤케이크 자르기](https://school.programmers.co.kr/learn/courses/30/lessons/132265)
 
 ## 완전탐색, DFS(재귀), 백트래킹
-- 컴퓨터는 1초에 천만 번 연산한다. n에 따라 사용하는 알고리즘이 달라진다. (500, 2000, 십만, 천만)
-
 - 모든 경우를 탐색해야 하면 DFS를 사용한다.
 
 - 상태트리를 그리는데 여러 개로 갈라진다 -> dfs를 여러 번 사용한다.
