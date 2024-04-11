@@ -104,18 +104,29 @@
 
 - 상태트리를 그리는데 여러 개로 갈라진다 -> dfs를 여러 번 사용한다.
 
+- DFS/BFS의 시간복잡도: 인접행렬을 사용하여 만든 그래프의 경우에는 O(n^2)의 시간복잡도를 가지고, 인접리스트를 사용하여 만든 그래프의 경우에는 O(n+e)이다.
+
 - 백트래킹: DFS를 통해 모든 노드를 깊이 우선 탐색을 하면서 현재 노드가 제한조건을 위배한다면 그 노드를 제외
 
-[마법의 엘리베이터](https://school.programmers.co.kr/learn/courses/30/lessons/148653)
+- DFS인데 n이 큰 경우 백트래킹을 사용한다. (n-queens, 여행경로, 단어변환 ...)
 
-[n-queens](https://school.programmers.co.kr/learn/courses/30/lessons/12952)
+[마법의 엘리베이터](https://school.programmers.co.kr/learn/courses/30/lessons/148653)
 
 [하노이 탑](https://school.programmers.co.kr/learn/courses/30/lessons/12946)
 
 [삼각 달팽이](https://school.programmers.co.kr/learn/courses/30/lessons/68645)
 
+[n-queens](https://school.programmers.co.kr/learn/courses/30/lessons/12952)
+
+[단어 변환](https://school.programmers.co.kr/learn/courses/30/lessons/43163)
+
+[여행 경로](https://school.programmers.co.kr/learn/courses/30/lessons/43164)
+
+
 ## 최단거리, BFS
 - 그리드 형태의 맵이 주어지고 목적지에 도착했을 때의 최단거리(최소비용)을 구하는 문제 -> 전형적인 BFS
+
+[게임 맵 최단거리](https://school.programmers.co.kr/learn/courses/30/lessons/1844)
 
 [미로탈출](https://school.programmers.co.kr/learn/courses/30/lessons/159993)
 
@@ -130,6 +141,16 @@
 
 [점프와 순간이동](https://school.programmers.co.kr/learn/courses/30/lessons/12980)
 
+## 서로소 집합, 사이클 판별
+- make 연산: 부모 노드의 인덱스를 저장하는 parents 배열. 초기에는 자기 자신만을 가리킨다. 이때 시간복잡도는 O(1)
+
+- find 연산: 어떤 원소가 주어지면, 이 원소가 속한 집합의 대표 원소(=루트 노드)를 반환하는 연산
+
+- Path Compression: find 연산을 수행할 때마다 트리를 평평하게 만드는 것. 평평한 트리가 만들어진 이후에는 O(1)만에 find를 수행 가능. 평균적으로 O(logN)
+
+- union 연산: 두 개의 집합을 하나의 집합으로 합치는 연산. 즉 한 트리의 루트를 다른 트리의 루트에 연결해서 하나의 트리로 합치는 것. 이때 시간복잡도는 O(1)
+
+[네트워크](https://school.programmers.co.kr/learn/courses/30/lessons/43162)
 
 ## DP
 - 가장 작은 값부터 시작해서 이 값을 저장하고, 미리 구한 값을 이용해서 상위 문제를 풀어나가는 방식
@@ -232,6 +253,12 @@ nArr.reduce((a,b)=> a + b);
 
 ## 기타 알고리즘
 ### 계수정렬
+- 배열의 원소가 모두 양수이면서, 가장 큰 값과 가장 작은 값의 차이가 백만 이하일 경우 사용 가능
+
+- 특정 조건에서는 씹사기 알고리즘: 정렬해야 하는 데이터 개수가 매우 많으면서, 데이터의 차이가 백만 이하, 많이 중복될 때
+
+-시간복잡도: O(M + K), 데이터수: M, 최댓값: K
+
 ### 캐시
 ### 쿼드트리
 ### 등차수열과 등비수열
@@ -258,11 +285,174 @@ console.log(result); // [3,5,7,9,11]
 
 알파벳 배열: `[..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"]`
 
-백트래킹 기본 템플릿, bfs 기본 템플릿
+백트래킹 기본 템플릿
 
-슬라이딩윈도우, 투포인터, 소수판별, 에라토스테네스의 체, 최대공약수와 최소공배수
+슬라이딩윈도우, 투포인터, 소수판별, 에라토스테네스의 체
 
-조합, 순열, 중복조합, 서로소판별, 계수정렬, 
+조합, 순열, 중복조합(n이 10이하, 20 이하일 때만 사용)
+
+```
+// 조합
+function getCombinations(arr, selectedNum) {
+	const result = [];
+	if (selectedNum === 1) return arr.map((e) => e); // 배열을 원한다면 [e]
+
+	arr.forEach((fixed, idx, origin) => {
+		const rest = origin.slice(idx + 1);
+		const combs = getCombinations(rest, selectedNum - 1);
+		const attached = combs.map(e => fixed + e); // 배열을 원한다면 [fixed, ...e]
+		result.push(...attached);
+	});
+
+	return result;
+}
+// 순열
+function getPermutations(arr, selectedNum) {
+	const result = [];
+	if (selectedNum === 1) return arr.map((e) => [e]);
+
+	arr.forEach((fixed, idx, origin) => {
+		const rest = [...origin.slice(0, idx), ...origin.slice(idx + 1)];
+		const combs = getCombinations(rest, selectedNum - 1);
+		const attached = combs.map((subSet) => [fixed, ...subSet]);
+		result.push(...attached);
+	});
+
+	return result;
+}
+// 중복조합
+function getMultisets(arr, selectedNum) {
+	const result = [];
+	if (selectedNum === 1) return arr;
+
+	arr.forEach((fixed, idx, origin) => {
+		const rest = origin;
+		const combs = getCombinations(rest, selectedNum - 1);
+		const attached = combs.map((subSet) => fixed + subSet);
+		result.push(...attached);
+	});
+
+	return result;
+}
+```
+
+서로소판별
+```
+//특정 원소가 속한 집합 찾기 (루트 찾기)
+const findParent = (parent, x) => {
+	if (parent[x] === x) return parent[x];
+	return (parent[x] = findParent(parent, parent[x]));
+};
+
+//두 원소가 속한 집합을 합치기 (루트 갱신)
+const unionParent = (parent, a, b) => {
+	a = findParent(parent, a);
+	b = findParent(parent, b);
+	if (a < b) parent[b] = a;
+	else parent[a] = b;
+};
+
+function solution(n, m, edges) {
+	//부모 테이블 초기화
+	let parent = [...Array(n + 1).fill(0)];
+	for (let i = 1; i <= n; i++) {
+		parent[i] = i;
+	}
+
+	//union 연산 수행
+	for (const edge of edges) {
+		const [a, b] = edge;
+		unionParent(parent, a, b);
+	}
+
+	//각 원소가 속한 집합 출력
+	let sets = '';
+	for (let i = 1; i <= n; i++) {
+		sets += findParent(parent, i);
+	}
+
+	console.log(`각 원소가 속한 집합: ${sets.split('').join(' ')}`);
+	console.log(`부모 테이블: ${parent.slice(1, n).join(' ')}`);
+}
+
+const n = 5;
+const m = 4;
+const edges = [
+	[4, 5],
+	[3, 4],
+	[2, 3],
+	[1, 2],
+];
+
+solution(n, m, edges);
+```
+
+사이클 판별
+```
+function solution(n, m, edges) {
+	let parent = [...Array(n + 1).fill(0)];
+	for (let i = 1; i <= n; i++) {
+		parent[i] = i;
+	}
+
+	let isCycle = false;
+	for (const edge of edges) {
+		const [a, b] = edge;
+		if (parent[a] !== parent[b]) unionParent(parent, a, b);
+		else {
+			isCycle = true;
+			break;
+		}
+	}
+
+	console.log(isCycle ? '사이클이 발생했습니다.' : '사이클이 발생하지 않았습니다.');
+}
+
+const n = 3;
+const m = 3;
+const edges = [
+	[1, 2],
+	[1, 3],
+	[2, 3],
+];
+
+solution(n, m, edges);
+```
+
+계수정렬
+```
+function countingSort(arr) {
+	const min = Math.min(...arr);
+	const max = Math.max(...arr);
+	let count = {};
+
+	// min~max 사이의 모든 범위를 포함하는 배열 선언
+	for (let i = min; i <= max; i++) {
+		count[i] = 0;
+	}
+
+	for (let i = 0; i < arr.length; i++) {
+		count[arr[i]] += 1; // 각 데이터에 해당하는 인덱스 값 증가
+	}
+
+	const sortedArr = [];
+	for (let i = min; i < max; i++) {
+		while (count[i] > 0) {
+			// count의 원소가 0이 되면 정렬 멈춤
+			sortedArr.push(i);
+			count[i]--;
+		}
+	}
+
+	return sortedArr;
+}
+
+const INPUT = [7, 5, 9, 0, 3, 1, 6, 2, 9, 1, 4, 8, 0, 5, 2];
+
+const OUTPUT = countingSort(INPUT);
+
+console.log(OUTPUT); // [1, 2, 3, 6, 7, 9]
+```
 
 우선순위큐
 ```
@@ -411,7 +601,7 @@ function solution(n, edges) {
 
 유클리드거리: Math.sqrt(Math.pow((x1- y1), 2) + Math.pow((x2- y2), 2))
 
-맨해튼거리: Math.abs(x2 - x1) + Math.abs(y2 - y1);
+맨해튼거리: Math.abs(x2 - x1) + Math.abs(y2 - y1)
 
 DFS
 ```
@@ -467,7 +657,28 @@ console.log(bfs(1));
 
 이진탐색
 ```
-		
+function binary_search(arr, target) {
+	let start = 0;
+	let end = arr.length - 1;
+
+	while (start <= end) {
+		let mid = ~~((start + end) / 2);
+		if (arr[mid] === target) {
+			return mid;
+		} else if (arr[mid] > target) {
+			end = mid - 1;
+		} else {
+			start = mid + 1;
+		}
+	}
+	return -1;
+}
+
+const INPUT = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const OUTPUT = binary_search(INPUT, 8);
+
+console.log(OUTPUT); // 7		
 ```
 
 이진탐색 활용 - upperBound와 lowerBound
