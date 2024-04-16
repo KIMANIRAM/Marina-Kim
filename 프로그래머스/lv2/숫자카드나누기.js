@@ -50,6 +50,9 @@ function solution(arrayA, arrayB) {
 
     if(arrayA.every(e => e % gcdB !== 0)) ans = Math.max(ans, gcdB);
     if(arrayB.every(e => e % gcdA !== 0)) ans = Math.max(ans, gcdA);
+    // some을 사용할 수도 있음.
+    // if(!arrayA.some(e => e % gcdb === 0)) ans = Math.max(ans, gcdb);
+    // if(!arrayB.some(e => e % gcda === 0)) ans = Math.max(ans, gcda);
 
     return ans;
 }
