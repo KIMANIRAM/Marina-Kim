@@ -1,36 +1,39 @@
-function solution(orders, course) {
+function getCombinations(arr, selectedN) {
     const result = [];
+    if(selectedN === 1) return arr;
+    
+    arr.forEach((fixed, idx, origin) => {
+        const rest = origin.slice(idx + 1);
+        const combs = getCombinations(rest, selectedN - 1);
+        const attached = combs.map(c => fixed + c);
+        result.push(...attached);
+    });
+    
+    return result;
+}
 
-    const dfs = (arr, selectNum) => {
-        const result = [];
-        if(selectNum === 1) return arr;
-
-        arr.forEach((fixed, idx, origin) => {
-            const rest = origin.slice(idx + 1);
-            const combs = dfs(rest, selectNum - 1);
-            const attached = combs.map(comb => fixed + comb);
-            attached.sort();
-            result.push(...attached);
-        });
-
-        return result;
-    };
-
-    const findMaxPair = menuArr => {
-        if(menuArr.length === 0) return [];
-        const max = Math.max(...menuArr.map(e => e[1]));
-        return menuArr.filter(e => e[1] === max).map(e => e[0]);
-    };
-
-    for(let i = 0; i < course.length; i++) {
-        const menus = new Map();
-        for(let j = 0; j < orders.length; j++) {
-            if(course[i] > orders[j].length) continue;
-            if(orders[j].length >= course[i]) {
-                dfs([...orders[j]].sort(), course[i]).forEach(menu => menus.set(menu, (menus.get(menu) || 0) + 1));
-            }
+function createMenu(orders, r) {
+    const menuMap = orders.reduce((map, order) => {
+        if(order.length >= r) {
+            getCombinations([...order].sort(), r).forEach(c => map.set(c, (map.get(c) || 0) + 1));
         }
-        result.push(...findMaxPair(Array.from(menus).filter(e => e[1] > 1)));
-    }
-    return result.sort();
+        return map;
+    }, new Map());
+    return Array.from(menuMap).filter(([_, v]) => v > 1);
+}
+
+function findPopularMenu(menu) {
+    const maxNum = Math.max(...menu.map(([_, v]) => v));
+    return menu.filter(([_, v]) => v === maxNum).map(([k, _]) => k);
+}
+
+function solution(orders, course) {
+    const answer = [];
+    
+    course.forEach(r => {
+        const menu = createMenu(orders, r);
+        if(menu.length) answer.push(...findPopularMenu(menu));
+    });
+    
+    return answer.sort();
 }
