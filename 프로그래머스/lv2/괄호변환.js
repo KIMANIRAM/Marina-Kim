@@ -1,50 +1,44 @@
-function isCurrect(p) { 
+function isCorrect(str) {
     const st = [];
-    for(let i = 0; i < p.length; i++) {
-        if(st[st.length - 1] === '(' && p[i] === ')') {
+    for(let i = 0; i < str.length; i++) {
+        if(st.length && st[st.length - 1] === '(' && str[i] === ')') {
             st.pop();
         } else {
-            st.push(p[i]);
+            st.push(str[i]);
         }
     }
-    return st.length === 0 ? true: false;
+    return st.length === 0;
 }
 
-
-function getBalanceStr(p) {
-    if(!p.length) return ['', ''];
-    let [left, right] = [0, 0];
-    for(let i = 0; i < p.length; i++) {
-        if(p[i] === '(') {
-            left++;
+function splitToUV(str) {
+    let [leftCnt, rightCnt] = [0, 0];
+    for(let i = 0; i < str.length; i++) {
+        if(str[i] === '(') {
+            leftCnt++;
         } else {
-            right++;
+            rightCnt++;
         }
-        if(left === right) {
-            return [p.slice(0, i + 1), p.slice(i + 1)];
-        }
+        if(leftCnt === rightCnt) return [str.slice(0, i + 1), str.slice(i + 1)];
     }
 }
 
-function reverseStr(u) {
-    if(!u.length) return '';
-    return [...u].map(s => s === '(' ? ')' : '(').join('');
+function convertU(str) {
+    return [...str.slice(1, str.length - 1)].map(e => e === '(' ? ')' : '(').join(''); 
+}
+
+function getCorrectedStr(w) {
+    if(w.length === 0) return '';
+    const [u, v] = splitToUV(w);
+    if(isCorrect(u)) {
+        return u + getCorrectedStr(v);
+    } else {
+        return '(' + getCorrectedStr(v) + ')' + convertU(u);
+    }
 }
 
 function solution(p) {
-    if(p === '') return '';
-    if(isCurrect(p)) return p;
-
-    const dfs = (str) => {
-        if(str === '') return '';
-        const [u, v] = getBalanceStr(str);
-        // console.log(u, 'and', v);
-        if(isCurrect(u)) {
-            return u + dfs(v);
-        } else {
-            return '(' + dfs(v) + ')' + reverseStr(u.slice(1, u.length - 1));
-        }
-    };
-
-    return dfs(p);
+    if(p.length === 0) return '';
+    const answer = getCorrectedStr(p);
+    
+    return answer;
 }
