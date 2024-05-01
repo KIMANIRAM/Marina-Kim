@@ -27,3 +27,49 @@ function solution(rows, columns, queries) {
     
     return answer;
 }
+
+// declarative programming
+function pipe(...fns) {
+    return (...args) => fns.reverse().reduceRight((res, fn) => {
+        return [fn.call(null, ...res)]
+    }, args)[0];
+}
+
+function solution(rows, columns, queries) {
+    const grid = Array.from({ length: rows }, (_, ri) => Array.from({ length: columns }, (_, ci) => ri * columns + ci + 1));
+    
+    const selectBorder = ([x1, y1, x2, y2]) => {
+        const deq = [];
+        for(let i = y1; i < y2; i++) deq.push(grid[x1 - 1][i - 1]);
+        for(let i = x1; i < x2; i++) deq.push(grid[i - 1][y2 - 1]);
+        for(let i = y2; i > y1; i--) deq.push(grid[x2 - 1][i - 1]);
+        for(let i = x2; i > x1; i--) deq.push(grid[i - 1][y1 - 1]);
+        return deq;
+    };
+    
+    const rotateBorder = (deq) => {
+        const selectedBorder = [...deq];
+        selectedBorder.unshift(selectedBorder.pop());
+        return selectedBorder;
+    };
+    
+    const findMin = (rotatedBorder) => {
+        const min = Math.min(...rotatedBorder);
+        return { min, rotatedBorder };
+    }
+    
+    const updateGrid = ([x1, y1, x2, y2], rotatedBorder) => {
+        for(let i = y1; i < y2; i++) grid[x1 - 1][i - 1] = rotatedBorder.shift();
+        for(let i = x1; i < x2; i++) grid[i - 1][y2 - 1] = rotatedBorder.shift();
+        for(let i = y2; i > y1; i--) grid[x2 - 1][i - 1] = rotatedBorder.shift();
+        for(let i = x2; i > x1; i--) grid[i - 1][y1 - 1] = rotatedBorder.shift();
+    };
+    
+    const result = queries.map(query => {
+        const { min, rotatedBorder } = pipe(selectBorder, rotateBorder, findMin)(query);
+        updateGrid(query, rotatedBorder);
+        return min;
+    });
+    
+    return result;
+}
