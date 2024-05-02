@@ -73,3 +73,71 @@ function solution(expression) {
 
     return max;
 }
+
+// 두 번째 풀이 - slice 활용
+function convertExpression(expression) {
+    const terms = [];
+    const operators = new Set();
+    let temp = '';
+    for(let i = 0; i < expression.length; i++) {
+        if(isNaN(expression[i])) {
+            terms.push(+temp, expression[i]);
+            operators.add(expression[i]);
+            temp = '';
+        } else {
+            temp += expression[i];
+        }
+    }
+    terms.push(+temp);
+    return { terms, operators };
+}
+
+function getPermutations(arr, selectedN) {
+    const result = [];
+    if(arr.length === 1) return arr.map(e => [e]);
+    arr.forEach((fixed, i, origin) => {
+        const rest = [...origin.slice(0, i), ...origin.slice(i + 1)];
+        const perms = getPermutations(rest, selectedN - 1);
+        const attached = perms.map(p => [fixed, ...p]);
+        result.push(...attached);
+    });
+    return result;
+}
+
+function calculateTerm(a, b, op) {
+    if(op === '*') {
+        return a * b;
+    }
+    if(op === '+') {
+        return a + b;
+    }
+    if(op === '-') {
+        return a - b;
+    }
+}
+
+function calculate(terms, ops) {
+    if(terms.length === 1) {
+        return Math.abs(...terms);
+    }
+    const i = terms.indexOf(ops[0]);
+    if(i === -1) {
+        return calculate(terms, ops.slice(1));
+    }
+    if(i !== -1) {
+        return calculate([...terms.slice(0, i - 1), calculateTerm(terms[i - 1], terms[i + 1], ops[0]), ...terms.slice(i + 2)], ops);
+    }
+}
+
+function solution(expression) {
+    // 주어진 문자열을 배열로 변환하고 문자열에 들어간 연산자 배열 구하기
+    const { terms, operators } = convertExpression(expression);
+    // 연산자 우선순위 조합 구하기
+    const operatorPerms = getPermutations([...operators], operators.size);
+    // 연산자 우선순위 조합을 순회하며 가장 큰 절댓값을 찾기
+    let max = 0;
+    operatorPerms.forEach(op => {
+        max = Math.max(max, calculate(terms, op));
+    });
+    return max;
+}
