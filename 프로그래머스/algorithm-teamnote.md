@@ -68,6 +68,8 @@
 
 [주식가격](https://school.programmers.co.kr/learn/courses/30/lessons/42584)
 
+[두 큐 합 같게 만들기](https://school.programmers.co.kr/learn/courses/30/lessons/118667)
+
 
 ## 우선순위큐
 - 스택이나 큐를 사용해야 할 것 같은데 값을 큰 순서대로/작은 순서대로 꺼내야 할 때
@@ -81,6 +83,7 @@
 [더 맵게](https://school.programmers.co.kr/learn/courses/30/lessons/42626)
 
 [이중우선순위큐](https://school.programmers.co.kr/learn/courses/30/lessons/42628)
+
 
 ## 해시
 - 입력으로 배열이 주어지는데 각각의 원소의 개수를 세어야 하는 경우
@@ -99,8 +102,29 @@
 
 [롤케이크 자르기](https://school.programmers.co.kr/learn/courses/30/lessons/132265)
 
-## 완전탐색, DFS(재귀), 백트래킹
-- 모든 경우를 탐색해야 하면 DFS를 사용한다.
+
+## 시뮬레이션, 완전탐색
+- 문제에서 설명을 자세하게 하고 있다 -> 이대로 구현하기만 하면 된다.
+
+- 탐색 범위가 작다면 최적화를 신경쓰지 않고 문제에서 설명하는 대로 구현만 하면 된다. (중첩 for문 사용 가능)
+
+- 시간 절약 팁: 일단 선언적으로 작성한 다음 세부적인 함수를 구현한다.
+
+- 다른 알고리즘이랑 같이 나오는 경우가 대부분이다.
+
+완전탐색 -> [거리두기 확인하기](https://school.programmers.co.kr/learn/courses/30/lessons/81302), [행렬 테두리 회전하기](https://school.programmers.co.kr/learn/courses/30/lessons/77485), [프렌즈 4블록](https://school.programmers.co.kr/learn/courses/30/lessons/17679)
+
+스택, 재귀 -> [괄호 변환](https://school.programmers.co.kr/learn/courses/30/lessons/60058)
+
+조합(DFS), 해시 -> [메뉴 리뉴얼](https://school.programmers.co.kr/learn/courses/30/lessons/72411)
+
+스택, 재귀, 순열(DFS) -> [수식 최대화](https://school.programmers.co.kr/learn/courses/30/lessons/67257)
+
+해시, 정렬 -> [파일명 정렬](https://school.programmers.co.kr/learn/courses/30/lessons/17686)
+
+
+## DFS(재귀), 백트래킹
+- 완전탐색(모든 경우를 탐색)인데 범위가 큰 경우에는 DFS/BFS/백트래킹을 사용한다.(그래도 안 풀리면 그리디 or DP)
 
 - 상태트리를 그리는데 여러 개로 갈라진다 -> dfs를 여러 번 사용한다.
 
@@ -176,13 +200,20 @@
 
 - 문제에서는 보통 while문을 사용
 
-- 중복된 값이 있는 배열이라면 upperBound와 lowerBound로 푼다.
+- **그냥 이진탐색만 알고있으면 문제를 풀 수 없는 경우가 많다.** 파라메트릭 서치, upperBound와 lowerBound를 알고 있어야 한다.
+	- 중복된 값이 있는 배열이라면 upperBound와 lowerBound로 푼다.
+	- start, end의 인덱스를 잘못 설정하는 경우 무한루프가 발생함 -> start와 end가 붙어 있고 두 값이 같으면 `mid = (start + end + 1) / 2` 로 설정해본다.
+	- **숨겨진 이진탐색 문제**: 파라메트릭 서치(조건을 만족하는 최소/최댓값을 구하는 문제를 결정 문제로 변환해 이분 탐색을 수행하는 방법
+	- BOJ 1654번 랜선자르기: N개를 만들 수 있는 랜선의 최대 길이 -> 랜선의 길이가 x일때 랜선이 N개 이상인가 아닌가?
 
 [예상 대진표](https://school.programmers.co.kr/learn/courses/30/lessons/12985)
 
 [입국 심사](https://school.programmers.co.kr/learn/courses/30/lessons/43238)
 
 [시소 짝꿍](https://school.programmers.co.kr/learn/courses/30/lessons/152996)
+
+[디펜스 게임](https://school.programmers.co.kr/learn/courses/30/lessons/142085?language=javascript)
+
 
 ## 최단경로
 - 그리디와 DP를 합친 유형.
