@@ -46,6 +46,8 @@
 
 [단속 카메라](https://school.programmers.co.kr/learn/courses/30/lessons/42884?language=javascript)
 
+[광물 캐기](https://school.programmers.co.kr/learn/courses/30/lessons/172927?language=javascript)
+
 
 ## 스택/큐
 - 최대/최소를 물어보면서 주어진 배열을 정렬해서는 안 되는 문제
@@ -284,6 +286,8 @@ const LCM = (min, max) => min * max / GCD(min, max);
 ```
 
 [n개의 최소공배수](https://school.programmers.co.kr/learn/courses/30/lessons/12953)
+
+[멀쩡한 사각형](https://school.programmers.co.kr/learn/courses/30/lessons/62048)
 
 
 ### 이진수
