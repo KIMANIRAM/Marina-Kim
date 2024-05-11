@@ -1,27 +1,25 @@
-function solution(s) {
-    const max = ~~(s.length / 2);
-    let min = s.length;
-
-    const getSlice = (chunkLen) => {
-        const comps = [];
-        const st = [];
-        for(let j = 0; j < s.length; j += chunkLen) {
-            const chunk = s.slice(j, j + chunkLen);
-            if(st.length && st[st.length - 1] === chunk) {
-                const cnt = comps.pop() + 1;
-                comps.push(cnt);
-            } else {
-                comps.push(1);
-                st.push(chunk);
-            }
+function getCompress(s, slicingSize) {
+    const cnts = [];
+    const st = [];
+    for(let i = 0; i < s.length; i += slicingSize) {
+        const cur = s.slice(i, i + slicingSize);
+        if(st.length && st[st.length - 1] === cur) {
+            cnts.push(cnts.pop() + 1);
+        } else {
+            cnts.push(1);
+            st.push(cur);
         }
-        const removedLen = comps.filter(e => e !== 1).join('').length;
-        return (st.length - 1) * chunkLen + st[st.length - 1].length + removedLen;
-    };
+    }
+    return (st.length - 1) * slicingSize + st[st.length - 1].length + cnts.filter(cnt => cnt !== 1).join('').length;
+}
+
+function solution(s) {
+    const max = Math.floor(s.length / 2);
+    let min = s.length;
     
     for(let i = 1; i <= max; i++) {
-        min = Math.min(min, getSlice(i));
-    } 
-  
+        min = Math.min(min, getCompress(s, i));
+    }
+    
     return min;
 }
