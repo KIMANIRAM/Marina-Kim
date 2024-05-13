@@ -760,3 +760,71 @@ function lowerBound(target, arr, left, right) {
     return left;
 }
 ```
+
+세그먼트 트리
+```
+function createTree(array, N) {
+  const k = Math.ceil(Math.log2(N));
+  const startIdx = Math.pow(2, k);
+  const size = startIdx * 2;
+  const ST = Array(size).fill(0);
+  
+  for(let i = 0; i < N; i++) {
+    ST[i + startIdx] = array[i];
+  }
+  
+  for(let i = startIdx - 1; i > 0; i--) {
+    ST[i] = ST[i * 2] + ST[i * 2 + 1];
+  }
+  
+  return [k, ST];
+}
+
+
+function query(ST, k, min, max) {
+  let result = 0;
+  let start = min + Math.pow(2, k) - 1;
+  let end = max + Math.pow(2, k) - 1;
+  
+  while(start <= end) {
+    if(start % 2 === 1) {
+      result += ST[start];
+    }
+    if(end % 2 === 0) {
+      result += ST[end];
+    }
+    start = Math.floor((start + 1) / 2);
+    end = Math.floor((end - 1) / 2);
+  }
+  
+  return result;
+}
+
+function update(ST, k, idx, val) {
+  let i = idx + Math.pow(2, k) - 1;
+  ST[i] = val;
+  
+  while(i > 1) {
+    if(i % 2 === 0) {
+      ST[Math.floor(i / 2)] = ST[i] + ST[i + 1];
+    } else {
+      ST[Math.floor(i / 2)] = ST[i] + ST[i - 1];
+    }
+    i = Math.floor(i / 2);
+  }
+}
+
+const array = [5,8,4,3,7,2,1,6];
+const N = array.length;
+const [k, ST] = createTree(array, N);
+
+// 2~6까지의 구간 합? -> A[9]~A[13]까지의 구간합
+// 1~4까지의 구간 합? -> A[8]~A[11]까지의 구간합
+console.log(query(ST, k, 2, 6)); // 24
+console.log(query(ST, k, 1, 4)); // 20
+
+// 5번 데이터의 값을 10으로 업데이트
+console.log('before: ', ST);
+update(ST, k, 5, 10);
+console.log('after: ', ST)
+```
