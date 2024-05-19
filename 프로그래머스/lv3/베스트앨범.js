@@ -15,10 +15,6 @@ function createOrders(playlist) {
     return orders;
 }
 
-function sortOrders(orders) {
-    return orders.sort((a, b) => b[1] - a[1]).map(order => order[0]);
-}
-
 function makeAlbum(orders, playlist) {
     const result = [];
     const sortPlaylist = list => list.sort((a, b) => a[1] === b[1] ? a[0] - b[0] : b[1] - a[1]);
@@ -31,6 +27,5 @@ function makeAlbum(orders, playlist) {
 function solution(genres, plays) {
     const playlist = createPlaylist(genres, plays);
     const orders = createOrders(playlist);
-    const sortedGenres = sortOrders(orders);
     return makeAlbum(orders, playlist);
 }
