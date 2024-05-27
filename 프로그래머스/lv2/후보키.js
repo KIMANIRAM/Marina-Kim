@@ -59,31 +59,45 @@ function solution(relation) {
 }
 
 // 두 번째 풀이 - 비트마스킹
-function duplcateCheck(list, key) {
-    let size = list.length;
-    for(let i=0; i<size; ++i) {
-        if((list[i] & key) == list[i]) return false;
+function getCombinations(n) {
+    const bitmask = [];
+    
+    for(let i = 1; i < (1 << n); i++) {
+        let bit = '';
+        for(let j = 0; j < n; j++) {
+            if((i & (1 << j)) !== 0) bit += j;
+        }
+        bitmask.push(bit);
     }
-    list.push(key);
-    return true;
+    
+    bitmask.sort((a, b) => a.length - b.length);
+    
+    return bitmask;
+}
+
+function checkUniqueness(keys, relation) {
+    const set = new Set();
+    relation.forEach(tuple => {
+        const temp = keys.map(k => tuple[k]).join(',');
+        set.add(temp);
+    });
+    return set.size === relation.length;
 }
 
 function solution(relation) {
-    let column = relation[0].length;
-    let row = relation.length;
-    let count = 0;
-    let bitMaskList = [];
-    for(let i = 1; i < (1 << column); ++i) {
-        let keySet = new Set();
-        for(let j = 0; j < row; ++j) {
-            let key = "";
-            for(let k = 0; k < column; ++k) {
-                if((i & (1 << k)) != 0) key += relation[j][k];
-            }
-            keySet.add(key);
+    const col = relation[0].length;
+    const row = relation.length;
+    let bitmask = getCombinations(col); 
+    let cnt = 0;
+    
+    while(bitmask.length) {
+        const keys = bitmask.shift().split('').map(bit => +bit);
+        
+        if(checkUniqueness(keys, relation)) {
+            cnt++;
+            bitmask = bitmask.filter(bit => !keys.every(k => bit.includes(k)));
         }
-        if(keySet.size == row && duplcateCheck(bitMaskList, i)) ++count;
     }
-
-    return count;
+    
+    return cnt;
 }
