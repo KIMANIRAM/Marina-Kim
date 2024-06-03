@@ -25,27 +25,23 @@ function solution(n) {
 
 // 두 번째 풀이 - DFS
 function solution(n) {
+    const dirs = [[-1, -1], [1, 0], [0, 1]];
     const answer = Array(n).fill().map(e => Array(n).fill(0));
-    const dirs = [
-        [-1, -1],
-        [1, 0],
-        [0, 1]
-    ];
     
-    const dfs = (N, x, y, curV) => {
-        if(N > n) return;
-        const [dx, dy] = dirs[N % 3];
+    const dfs = (depth, x, y, val) => {
+        if(depth > n) return;
+        const [dx, dy] = dirs[depth % 3];
         let [nx, ny] = [x, y];
-        for(let i = 0; i <= n - N; i++) {
+        for(let i = 0; i <= n - depth; i++) {
             nx += dx;
             ny += dy;
-            answer[nx][ny] = curV;
-            curV++;
+            answer[nx][ny] = val;
+            val++;
         }
-        dfs(N + 1, nx, ny, curV);
+        dfs(depth + 1, nx, ny, val);
     };
     
     dfs(1, -1, 0, 1);
     
-    return answer.map(arr => arr.filter(e => e > 0)).flat();
+    return answer.flat().filter(e => e > 0);
 }
