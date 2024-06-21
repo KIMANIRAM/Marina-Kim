@@ -620,8 +620,9 @@ function solution(n, edges) {
   const d = Array(n + 1).fill().map(e => Array(n + 1).fill(Number.MAX_SAFE_INTEGER));
   // a에서 b로 가는 비용은 c
   for(let i = 1; i <= n; i++) d[i][i] = 0;
-	for(const [a, b, c] of edges) {
+  for(const [a, b, c] of edges) {
     d[a][b] = c;
+    d[b][a] = c;
   }
 	
   // 경유지 - 출발지 - 도착지
