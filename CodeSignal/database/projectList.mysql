@@ -1,0 +1,8 @@
+-- https://app.codesignal.com/arcade/db/welcome-to-the-table/RXErLMFkXFkM4MpYY
+
+CREATE PROCEDURE solution()
+BEGIN
+	SELECT project_name, team_lead, income
+	FROM Projects
+	ORDER BY internal_id ASC;
+END
