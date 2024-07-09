@@ -1,3 +1,66 @@
+## 팁
+
+1. 큰 숫자는 `e+총 자릿수`를 활용한다. (ex. 1000000007로 나눈 결과를 출력하시오 => le9 + 7)
+
+2. **구름 입력형식에서 `process.exit()`을 제거해도 테스트에서 문제가 없으면 제거한다.**
+
+3. 정수는 0 포함이다.
+
+
+
+
+## 백준, 엘리스, 구름 입출력 형식
+
+1. 한줄
+```
+const readline = require('readline');
+
+(async () => {
+	let rl = readline.createInterface({ input: process.stdin });
+	for await (const line of rl) {
+		console.log(숫자를받아숫자를리턴하는함수(+line));
+		rl.close();
+	}
+	
+	process.exit();
+})();
+```
+
+2. 두줄
+```
+const readline = require('readline');
+
+(async () => {
+	let rl = readline.createInterface({ input: process.stdin });
+	let [N, M] = [0, 0];
+	const data = [];
+	
+	for await (const line of rl) {
+		if(!N) {
+			N = (+line.split(' ')[0]);
+			M = (+line.split(' ')[1])
+		} else {
+			data.push(...line.split(' ').map(e => +e));
+		}
+		if(data.length === N) {
+			rl.close();
+		}
+	}
+	
+	solution(N, M, data);
+	process.exit();
+})();
+
+function solution(N, M, data) {
+	console.log(N, M, data);
+}
+```
+
+3. 여러줄
+```
+
+```
+
 ## 시간복잡도
 - **문제를 볼 때마다 시간복잡도 작성하기**
 
