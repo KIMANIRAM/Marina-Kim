@@ -1,12 +1,41 @@
-## 팁
+## 구름 입출력 에러
 
-1. 큰 숫자는 `e+총 자릿수`를 활용한다. (ex. 1000000007로 나눈 결과를 출력하시오 => le9 + 7)
+1. **코드를 작성하기 전에 테스트 케이스부터 작성한다.(매우매우 중요!)**
+- 문제에서 알려준 케이스 그대로 복붙
+- 비어있는 경우
+- 하나만 있는 경우
+- 같은 값이 있는 경우
+- 첫번째/마지막
+- 최솟값/최댓값
+- 최소범위/최대범위
+- 양수만 있음/음수만 있음
 
-2. **구름 입력형식에서 `process.exit()`을 제거해도 테스트에서 문제가 없으면 제거한다.**
+2. 로직에서 나누기가 들어갈때, 0으로 나누는 경우
+```javascript
+console.log(0 % 10) // 0
+console.log(10 % 0) // NaN
+```
 
-3. 정수는 0 포함이다.
+3. (로직 완벽해도 테케가 쭉 틀리는 경우) 입출력이 아래와 같다면, 즉시실행함수 입출력 방식으로 변경
+```javascript
+// 형식 1
+const readline = require('readline');
+let rl = readline.createInterface({
+	input: process.stdin,
+	output: process.stdout,
+});
+let input;
+rl.on('line', (line) => {
+	input = line;
+	rl.close();
+});
 
+rl.on('close', () => {
+	console.log("Hello Goorm! Your input is " + input);
+})
+```
 
+4. (로직 완벽해도 테케가 쭉 틀리는 경우) 입력형식에서 `process.exit()`을 제거해도 테스트에서 문제가 없으면 제거한다.
 
 
 ## 백준, 엘리스, 구름 입출력 형식
