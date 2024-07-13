@@ -361,6 +361,38 @@ function solution(N, M, data) {
 - 조합 시간 복잡도: O(2ⁿ)
 - 기본 순열과 조합 알고리즘은 n이 십만 이하일 때 사용해야 함
 
+### 개선된 조합 알고리즘
+```javascript
+const getCombinations = (arr, selectedNum) => {
+  const n = arr.length;
+  const result = [];
+
+  for (let i = 0; i < (1 << n); i++) {  // (1 << n) == 2^n
+    const combination = [];
+    let bitCount = 0;
+
+    for (let j = 0; j < n; j++) {
+      if (i & (1 << j)) {
+        combination.push(arr[j]);
+        bitCount++;
+      }
+    }
+
+    if (bitCount === selectedNum) {
+      result.push(combination);
+    }
+  }
+
+  return result;
+};
+
+// 사용 예시
+const array = [1, 2, 3];
+const selectedNum = 2;
+const combinations = getCombinations(array, selectedNum);
+console.log(combinations);  // 출력 결과: [ [ 1, 2 ], [ 1, 3 ], [ 2, 3 ] ]
+```
+
 [땅따먹기](https://school.programmers.co.kr/learn/courses/30/lessons/12913)
 
 ## 수학
